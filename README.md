@@ -8,9 +8,9 @@ I'm following the steps from https://github.com/torch-points3d/torch-points3d/is
 
 conda create -n torch-points python=3.8 vc=14.2\
 conda activate torch-points\
-pip install torch_cluster==1.6.0 torch_scatter==2.0.9 torch_sparse==0.6.13 -f https://pytorch-geometric.com/whl/torch-1.11.0%2Bcu115.html\
-pip install torch==1.11.0+cu115 torchvision==0.12.0+cu115 torchaudio==0.11.0+cu115 -f https://download.pytorch.org/whl/torch_stable.html\
-git clone https://github.com/torch-points3d/torch-points3d.git\
+pip install torch_cluster==1.6.0 torch_scatter==2.0.9 torch_sparse==0.6.13 -f https://pytorch-geometric.com/whl/torch-1.11.0%2Bcu115.html \
+pip install torch==1.11.0+cu115 torchvision==0.12.0+cu115 torchaudio==0.11.0+cu115 -f https://download.pytorch.org/whl/torch_stable.html \
+git clone https://github.com/torch-points3d/torch-points3d.git \
 cd torch-points3d\
 pip install -r requirements.txt\
 
