@@ -102,7 +102,11 @@ pip install open3d==0.12.0
 Then run ```pip install -r requirements.txt``` again.
 
 *To test if the installation is correct, use Python to test ```import torch_points_kernels.points_cuda```, there should be nothing that happens.\
-
+Install torch-points3d:
+···
+wget https://files.pythonhosted.org/packages/c5/f1/f3af914effa74b9a20cec6d27896ade54c01af1c402b9e176de56d0150c7/torch_points3d-1.3.0-py3-none-any.whl
+pip install torch_points3d-1.3.0-py3-none-any.whl
+···
 Can ignore the error like: 
 ```
 ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
@@ -126,7 +130,7 @@ Comment out the trainer.py line.355:
 ```
 As this api is for torch>=1.9.0, and we use torch=1.8.1
 
-Next time activate the environment:
+Next time, activate the environment:
 ```
 module load conda
 conda activate torch-points3d
