@@ -1,6 +1,6 @@
 # DLpoints
 
-This is created to test different deep learning models in separating the leaf and wood points from high-density TLS (Terrestrial Laser Scan) data.\
+This is created to test different deep learning models in separating the leaf and wood points from high-density TLS (Terrestrial Laser Scan) data.
 
 ## Windows environment
 I use a Silva Lab laptop with an NVIDIA Quadro RTX 5000 GPU.
@@ -105,3 +105,10 @@ Comment out the trainer.py line.355
 #skip_first=getattr(self._cfg.training.tensorboard.pytorch_profiler, "skip_first", 10)
 ```
 As this api is for torch>=1.9.0, and we use torch=1.8.1
+
+Next time activate the environment
+```
+module load conda
+conda activate torch-points3d
+cd torch-points3d
+```
