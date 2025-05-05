@@ -43,7 +43,7 @@ Load conda:
 module load conda
 ```
 If it shows 'No ~/.condarc found, creating a new config from HPG defaults', run ```module load conda``` again. Nothing should show up after running this.\
-Create virtual environment:
+Create a virtual environment:
 ```
 conda create -n torch-points3d python=3.7 cudatoolkit=11.1
 conda activate torch-points3d
@@ -52,7 +52,7 @@ Install PyTorch:
 ```
 pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 torchaudio==0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
 ```
-*To test if the installation is correctly, use python to test ```import torch torch.cuda.is_available()```, the result should be True
+*To test if the installation is correct, use Python to test ```import torch torch.cuda.is_available()```, the result should be True
 ```
 git clone https://github.com/torch-points3d/torch-points3d.git
 cd torch-points3d
@@ -61,7 +61,7 @@ Install requirements:
 ```
 pip install -r requirements.txt
 ```
-If error shows:
+If the error shows:
 ```
 Collecting sklearn (from open3d==0.12.0)
   Downloading sklearn-0.0.post12.tar.gz (2.6 kB)
@@ -94,19 +94,15 @@ error: metadata-generation-failed
 × Encountered error while generating package metadata.
 ╰─> See above for output.
 ```
-Run following:
+Run the following:
 ```
 pip install scikit-learn==1.0
 pip install open3d==0.12.0
 ```
 Then run ```pip install -r requirements.txt``` again.
 
-*To test if the installation is correctly, use python to test ```import torch_points_kernels.points_cuda```, there should be nothing happens.\
-Install torch-points3d:
-```
-wget https://files.pythonhosted.org/packages/c5/f1/f3af914effa74b9a20cec6d27896ade54c01af1c402b9e176de56d0150c7/torch_points3d-1.3.0-py3-none-any.whl
-pip install torch_points3d-1.3.0-py3-none-any.whl
-```
+*To test if the installation is correct, use Python to test ```import torch_points_kernels.points_cuda```, there should be nothing that happens.\
+
 Can ignore the error like: 
 ```
 ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
