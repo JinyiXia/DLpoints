@@ -127,7 +127,11 @@ conda install numpy==1.19.5
 pip install open3d==0.12.0
 pip install wandb --upgrade
 ```
-### 8. Test:
+### 8. Install pycuda
+```
+pip install pycuda
+```
+### 9. Test:
 ```
 python -m unittest -v
 ```
@@ -137,13 +141,13 @@ python -m unittest discover -s test -p "test_*.py" -v
 ```
 Shall see something like "Ran 163 tests in 213.969s OK"
 
-### 9. Comment out the trainer.py line.355:
+### 10. Comment out the trainer.py line.355:
 ```
 #skip_first=getattr(self._cfg.training.tensorboard.pytorch_profiler, "skip_first", 10)
 ```
 As this api is for torch>=1.9.0, and we use torch=1.8.1
 
-### 10. Next time, activate the environment:
+### 11. Next time, activate the environment:
 ```
 module load conda
 conda activate torch-points3d
