@@ -28,7 +28,7 @@ I am using supercomputer HiperGator from UF:
 - Cluster partition: gpu
 - Generic Resource Request: gpu:a100:1
 
-Check if gcc is greater than version 9:
+### 1. Check if gcc is greater than version 9:
 ```
 gcc --version
 ```
@@ -38,7 +38,7 @@ module spider GCC #check the available version of GCC
 module load gcc/9.3.0 #load the GCC
 gcc --version #double check the version
 ```
-Load conda:
+### 2. Load conda:
 ```
 module load conda
 ```
@@ -48,17 +48,15 @@ Create a virtual environment:
 conda create -n torch-points3d python=3.7 cudatoolkit=11.1
 conda activate torch-points3d
 ```
-Install PyTorch:
+### 3. Install PyTorch:
 ```
 pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 torchaudio==0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
 ```
-*To test if the installation is correct, use Python to test ```import torch torch.cuda.is_available()```, the result should be True
+*To test if the installation is correct, use Python to test ```python -c "import torch; torch.cuda.is_available()"```, the result should be True
+### 4. Install requirements:
 ```
 git clone https://github.com/torch-points3d/torch-points3d.git
 cd torch-points3d
-```
-Install requirements:
-```
 pip install -r requirements.txt
 ```
 If the error shows:
@@ -101,8 +99,8 @@ pip install open3d==0.12.0
 ```
 Then run ```pip install -r requirements.txt``` again.
 
-*To test if the installation is correct, use Python to test ```import torch_points_kernels.points_cuda```, there should be nothing that happens.\
-Install torch-points3d:
+*To test if the installation is correct, use Python to test ```python -c "import torch_points_kernels.points_cuda; print('torch_points_kernels.points_cuda OK')"```.
+### 5. Install torch-points3d:
 ```
 wget https://files.pythonhosted.org/packages/c5/f1/f3af914effa74b9a20cec6d27896ade54c01af1c402b9e176de56d0150c7/torch_points3d-1.3.0-py3-none-any.whl
 pip install torch_points3d-1.3.0-py3-none-any.whl
@@ -111,26 +109,35 @@ Can ignore the error like:
 ```
 ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
 ```
-Install those again:
+### 6. Install MinkowskiEngine and TorchSparse
+```
+conda install -y openblas ninja
+pip install -U "MinkowskiEngine==0.5.4" -f https://nvidia-minkowski-engine.s3.us-west-2.amazonaws.com/torch-1.8.1-cuda111.html
+conda install -c conda-forge sparsehash
+pip install --upgrade git+https://github.com/mit-han-lab/torchsparse.git@v1.4.0
+```
+*To test if the installation is correct, use Python to test ```python -c "import MinkowskiEngine as ME; print('MinkowskiEngine OK')"``` ```python -c "import torchsparse; print('TorchSparse OK')"```.
+
+### 7. Install the following with certain versions again:
 ```
 pip install hydra-core==1.0.7
 conda install numpy==1.19.5
 pip install open3d==0.12.0
 pip install wandb --upgrade
 ```
-Test:
+### 8. Test:
 ```
 python -m unittest -v
 ```
 Shall see something like "Ran 163 tests in 213.969s OK"
 
-Comment out the trainer.py line.355:
+### 9. Comment out the trainer.py line.355:
 ```
 #skip_first=getattr(self._cfg.training.tensorboard.pytorch_profiler, "skip_first", 10)
 ```
 As this api is for torch>=1.9.0, and we use torch=1.8.1
 
-Next time, activate the environment:
+### 10. Next time, activate the environment:
 ```
 module load conda
 conda activate torch-points3d
