@@ -24,7 +24,7 @@ C:\Users\jinyixia\AppData\Local\anaconda3\condabin\conda.bat install -c conda-fo
 ## Linux environment
 I am using supercomputer HiperGator from UF:
 - Number of CPU cores: 3
-- Maximum memory on the compute node requested for the job in Gigabytes: 32
+- Maximum memory on the compute node requested for the job in Gigabytes: 32 (Need to be more than 23 because that's how much PyTorch will ask to get allocated
 - Cluster partition: gpu
 - Generic Resource Request: gpu:a100:1
 
@@ -51,8 +51,10 @@ conda activate torch-points3d
 ### 3. Install PyTorch:
 ```
 pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 torchaudio==0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
+pip install torch-cluster -f https://data.pyg.org/whl/torch-1.8.1+cu111.html
+pip install torch-scatter -f https://data.pyg.org/whl/torch-1.8.1+cu111.html
 ```
-*To test if the installation is correct, use Python to test ```python -c "import torch; torch.cuda.is_available()"```, the result should be True
+*To test if the installation is correct, use Python to test ```python -c "import torch; print(torch.cuda.is_available())"``` ```python -c "import torch_cluster; print(torch_cluster.__file__)"``` ```python -c "import torch_scatter; print(torch_scatter.__file__)"```, the result should be True
 ### 4. Install requirements:
 ```
 git clone https://github.com/torch-points3d/torch-points3d.git
@@ -100,7 +102,16 @@ pip install open3d==0.12.0
 Then run ```pip install -r requirements.txt``` again.
 
 *To test if the installation is correct, use Python to test ```python -c "import torch_points_kernels.points_cuda; print('torch_points_kernels.points_cuda OK')"```.
-### 5. Install torch-points3d:
+### 5. Install MinkowskiEngine and TorchSparse
+```
+conda install -y ninja
+conda install -c conda-forge openblas-devel
+pip install -U "MinkowskiEngine==0.5.4" -f https://nvidia-minkowski-engine.s3.us-west-2.amazonaws.com/torch-1.8.1-cuda111.html
+pip install torch_sparse -f https://data.pyg.org/whl/torch-1.8.1+cu111.html
+pip install --upgrade git+https://github.com/mit-han-lab/torchsparse.git@v1.4.0
+```
+*To test if the installation is correct, use Python to test ```python -c "import MinkowskiEngine as ME; print('MinkowskiEngine OK')"``` ```python -c "import torchsparse; print('TorchSparse OK')"``` ```python -c "import torch_sparse; print('torch_sparse OK')"```.
+### 6. Install torch-points3d:
 ```
 wget https://files.pythonhosted.org/packages/c5/f1/f3af914effa74b9a20cec6d27896ade54c01af1c402b9e176de56d0150c7/torch_points3d-1.3.0-py3-none-any.whl
 pip install torch_points3d-1.3.0-py3-none-any.whl
@@ -109,15 +120,6 @@ Can ignore the error like:
 ```
 ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
 ```
-### 6. Install MinkowskiEngine and TorchSparse
-```
-conda install -y openblas ninja
-pip install -U "MinkowskiEngine==0.5.4" -f https://nvidia-minkowski-engine.s3.us-west-2.amazonaws.com/torch-1.8.1-cuda111.html
-conda install -c conda-forge sparsehash
-pip install --upgrade git+https://github.com/mit-han-lab/torchsparse.git@v1.4.0
-```
-*To test if the installation is correct, use Python to test ```python -c "import MinkowskiEngine as ME; print('MinkowskiEngine OK')"``` ```python -c "import torchsparse; print('TorchSparse OK')"```.
-
 ### 7. Install the following with certain versions again:
 ```
 pip install hydra-core==1.0.7
@@ -128,6 +130,10 @@ pip install wandb --upgrade
 ### 8. Test:
 ```
 python -m unittest -v
+```
+If the error shows ```ImportError: 'test' module incorrectly imported from '/home/jinyixia/torch-points3d/test'. Expected '/home/jinyixia/torch-points3d'. Is this module globally installed?```, try:
+```
+python -m unittest discover -s test -p "test_*.py" -v
 ```
 Shall see something like "Ran 163 tests in 213.969s OK"
 
@@ -141,5 +147,7 @@ As this api is for torch>=1.9.0, and we use torch=1.8.1
 ```
 module load conda
 conda activate torch-points3d
+module load cuda/11.1
+module load gcc/9.3.0
 cd torch-points3d
 ```
