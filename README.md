@@ -147,11 +147,15 @@ Shall see something like "Ran 163 tests in 213.969s OK"
 ```
 As this api is for torch>=1.9.0, and we use torch=1.8.1
 
-### 11. Next time, activate the environment:
+### 11. Next time activate the environment:
 ```
 module load conda
 conda activate torch-points3d
 module load cuda/11.1
 module load gcc/9.3.0
 cd torch-points3d
+```
+### 12. Request GPU resources by Interactive Access
+```
+srun -p gpu --account=rcstudents --nodes=1 --gpus=a100:2 --time=3-00:00:00 --mem=300gb --pty -u bash -i
 ```
