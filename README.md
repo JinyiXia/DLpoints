@@ -51,8 +51,8 @@ conda activate torch-points3d
 ### 3. Install PyTorch:
 ```
 pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 torchaudio==0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
-pip install torch-cluster -f https://data.pyg.org/whl/torch-1.8.1+cu111.html
-pip install torch-scatter -f https://data.pyg.org/whl/torch-1.8.1+cu111.html
+pip install torch-cluster==1.5.9 -f https://data.pyg.org/whl/torch-1.8.1+cu111.html
+pip install torch-scatter==2.0.7 -f https://data.pyg.org/whl/torch-1.8.1+cu111.html
 ```
 *To test if the installation is correct, use Python to test ```python -c "import torch; print(torch.cuda.is_available())"``` ```python -c "import torch_cluster; print(torch_cluster.__file__)"``` ```python -c "import torch_scatter; print(torch_scatter.__file__)"```, the result should be True
 ### 4. Install requirements:
