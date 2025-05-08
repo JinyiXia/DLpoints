@@ -157,11 +157,6 @@ cd torch-points3d
 ```
 ### 12. Batch job
 ```
-sbatch run_kpconv.sh
-watch -n 10 squeue -u jinyixia
-tail -f logs/kpconv-train_
-```
-```
 #!/bin/bash
 #SBATCH --job-name=kpconv-train
 #SBATCH --partition=gpu
@@ -187,8 +182,13 @@ cd /home/jinyixia/torch-points3d
 python train.py task=segmentation models=segmentation/kpconv model_name=KPDeformableConvPaper data=segmentation/shapenet training.wandb.log=false
 hydra.run.dir=/orange/rcstudents/jinyixia/torch-points3d_outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}
 ```
+```
+sbatch run_kpconv.sh
+watch -n 10 squeue -u jinyixia
+tail -f logs/kpconv-train_
+```
 
-Request GPU resources by Interactive Access
+Or request GPU resources by Interactive Access
 ```
 srun -p gpu --account=rcstudents --nodes=1 --gpus=a100:2 --time=3-00:00:00 --mem=300gb --pty -u bash -i
 ```
