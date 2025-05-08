@@ -155,7 +155,40 @@ module load cuda/11.1
 module load gcc/9.3.0
 cd torch-points3d
 ```
-### 12. Request GPU resources by Interactive Access
+### 12. Batch job
+```
+sbatch run_kpconv.sh
+watch -n 10 squeue -u jinyixia
+tail -f logs/kpconv-train_
+```
+```
+#!/bin/bash
+#SBATCH --job-name=kpconv-train
+#SBATCH --partition=gpu
+#SBATCH --gpus=a100:1
+#SBATCH --mem=120G
+#SBATCH --cpus-per-task=8
+#SBATCH --time=3-00:00:00
+#SBATCH --output=logs/%x_%j.out
+
+# Load modules and activate conda environment
+module load conda
+source activate torch-point3d
+module load cuda/11.1
+module load gcc/9.3
+
+# Set threads (optional, to avoid OMP warnings)
+export OMP_NUM_THREADS=8
+
+# Navigate to your project directory
+cd /home/jinyixia/torch-points3d
+
+# Start training
+python train.py task=segmentation models=segmentation/kpconv model_name=KPDeformableConvPaper data=segmentation/shapenet training.wandb.log=false
+hydra.run.dir=/orange/rcstudents/jinyixia/torch-points3d_outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}
+```
+
+Request GPU resources by Interactive Access
 ```
 srun -p gpu --account=rcstudents --nodes=1 --gpus=a100:2 --time=3-00:00:00 --mem=300gb --pty -u bash -i
 ```
